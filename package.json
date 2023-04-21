@@ -1,0 +1,19 @@
+{
+  "name": "discord-bot-starter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/indexVerif.js",
+  "scripts": {
+    "startVerif": "nodemon src/indexVerif.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "csv-parser": "^3.0.0",
+    "csvparser": "^0.1.4",
+    "discord.js": "^14.9.0",
+    "dotenv": "^16.0.3",
+    "nodemailer": "^6.9.1"
+  }
+}
