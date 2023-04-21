@@ -4,7 +4,9 @@
   "description": "",
   "main": "src/indexVerif.js",
   "scripts": {
-    "startVerif": "nodemon src/indexVerif.js"
+    "startEmailVerif": "nodemon src/indexVerif.js",
+    "startAssign": "nodemon src/indexAssign.js",
+    "test": "mocha src/botTest.spec.js"
   },
   "keywords": [],
   "author": "",
@@ -15,5 +17,8 @@
     "discord.js": "^14.9.0",
     "dotenv": "^16.0.3",
     "nodemailer": "^6.9.1"
+  },
+  "devDependencies": {
+    "mocha": "^10.2.0"
   }
 }
