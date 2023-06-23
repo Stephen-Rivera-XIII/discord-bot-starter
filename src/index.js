@@ -12,7 +12,7 @@ const client = new Client({
     ]   
 })
 
-client.login('MTA5ODYyNzQ5MTQ3Nzg2NDUzOQ.GG8MAi.snd4WLlSSI6besm5eUGaESR9NdMvuMDK0ozz-U');
+client.login("MTA5ODYyNzQ5MTQ3Nzg2NDUzOQ.Gk-L4t.SNXnMdh5F40RNbnb8ImaBKEp7pwwHG55MyGIBg");
 
 client.on('ready', (c) => {
     console.log(`✅ Logged in as ${c.user.tag}!`);}

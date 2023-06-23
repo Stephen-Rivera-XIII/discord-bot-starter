@@ -51,7 +51,7 @@ emailLists.forEach((list) => {
 });
 
 // Discord bot login
-client.login('MTA5ODYyNzQ5MTQ3Nzg2NDUzOQ.GG8MAi.snd4WLlSSI6besm5eUGaESR9NdMvuMDK0ozz-U'); //TODO this should be read in as a process.env.TOKEN
+client.login('MTA5ODYyNzQ5MTQ3Nzg2NDUzOQ.Gk-L4t.SNXnMdh5F40RNbnb8ImaBKEp7pwwHG55MyGIBg'); //TODO this should be read in as a process.env.TOKEN
 
 client.on('ready', (c) => {
     console.log(`✅ Logged in as ${c.user.tag}!`);}
@@ -61,7 +61,7 @@ client.on('ready', (c) => {
 client.on('messageCreate', async (message) => {
     if (message.content.startsWith('!!verifyEmail')) {
       const args = message.content.split(' ');
-      const userEmail = args[1];
+      const userEmail = args[1].toLocaleLowerCase();
       console.log("User email entered:", userEmail);
 
       // Check email against lists
