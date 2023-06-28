@@ -1,40 +1,34 @@
-const fs = require('fs');
-const path = require('path');
-const csv = require('csv-parser');
+const fs = require('fs'); // Import the fs module for file system operations
+const path = require('path'); // Import the path module for manipulating file paths
+const csv = require('csv-parser'); // Import the csv-parser module for parsing CSV data
 
 // Load email lists from CSV files
 async function loadEmailLists() {
   const emailLists = [
     {
-      name: 'lifeTimeMemberList',
-      path: 'lifeTimeMemberList.csv',
-      role: 'Lifetime Member',
-      emails: [],
+      name: 'lifeTimeMemberList', // Name of the email list
+      path: 'lifeTimeMemberList.csv', // Path to the CSV file
+      role: 'Lifetime Member', // Role associated with this email list
+      emails: [], // Array to store the email addresses
     },
     {
-      name: 'benIsBen',
-      path: 'benIsBen.csv',
-      role: 'isBen',
-      emails: [],
-    },
-    {
-      name: 'sarahIsSarah',
-      path: 'sarahIsSarah.csv',
-      role: 'isSarah',
-      emails: [],
+      name: 'chivette', // Name of the email list
+      path: 'chivetteList.csv', // Path to the CSV file
+      role: 'Chivette', // Role associated with this email list
+      emails: [], // Array to store the email addresses
     },
   ];
 
   for (const list of emailLists) {
-    const filePath = path.resolve(__dirname, list.path);
+    const filePath = path.resolve(__dirname, list.path); // Resolve the file path relative to the current module
     console.log(`Loading ${list.name} email list`);
-    const stream = fs.createReadStream(filePath, 'utf-8').pipe(csv());
+    const stream = fs.createReadStream(filePath, 'utf-8').pipe(csv()); // Create a read stream for the CSV file and pipe it to the csv-parser
     for await (const row of stream) {
-      list.emails.push(row.email);
+      list.emails.push(row.email); // Push each email address from the CSV row to the emails array
     }
     console.log(`Loaded ${list.emails.length} email addresses for ${list.name}`);
   }
-  return emailLists;
+  return emailLists; // Return the array of email lists
 }
 
-module.exports = { loadEmailLists };
+module.exports = { loadEmailLists }; // Export the loadEmailLists function

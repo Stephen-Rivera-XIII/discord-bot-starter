@@ -1,55 +1,50 @@
-// Required packages
+// Import required packages
 const { Client, IntentsBitField } = require('discord.js');
-const Discord = require('discord.js');
-const fs = require('fs');
-const csv = require('csv-parser');
-const nodemailer = require('nodemailer');
-const path = require('path');
-const { checkEmailList, RoleAssignmentPage } = require('./helpers.js'); // Import the checkEmailList function from helper.js
-const { loadEmailLists } = require('./emailListLoader.js');
+const { checkEmailList, RoleAssignmentPage } = require('./helpers.js');
 const { config } = require('dotenv');
-// const emailLists = await loadEmailLists();
-require('dotenv').config()
-console.log(process.env.TOKEN)
-const TOKEN = process.env.BOT_TOKEN;
 
-async function main(){ 
-// Discord client initialization
-const client = new Client({
-  intents: [
-    IntentsBitField.Flags.Guilds,
-    IntentsBitField.Flags.GuildMembers,
-    IntentsBitField.Flags.GuildMessages,
-    IntentsBitField.Flags.MessageContent
-  ]
-});
+// Load environment variables from .env file
+config();
 
-// Discord bot login
-client.login(TOKEN); //TODO this should be read in as a process.env.TOKEN
+// Main function
+async function main() {
+  // Create a new Discord client with specified intents
+  const client = new Client({
+    intents: [
+      IntentsBitField.Flags.Guilds,
+      IntentsBitField.Flags.GuildMembers,
+      IntentsBitField.Flags.GuildMessages,
+      IntentsBitField.Flags.MessageContent
+    ]
+  });
 
-client.on('ready', (c) => {
-  console.log(`✅ Logged in as ${c.user.tag}!`);
-});
+  // Log in the Discord bot using the BOT_TOKEN environment variable
+  client.login(process.env.BOT_TOKEN);
 
-// Event listener for messages
-client.on('messageCreate', async (message) => {
-  if (message.content.startsWith('!!verifyEmail')) {
-    const args = message.content.split(' ');
-    const userEmail = args[1].toLocaleLowerCase();
-    console.log("User email entered:", userEmail);
+  // Event listener for when the bot is ready
+  client.on('ready', (c) => {
+    console.log(`✅ Logged in as ${c.user.tag}!`);
+  });
 
-    // Check email against lists and assign role
-    if (await checkEmailList(userEmail, 'lifeTimeMemberList')) {
-      RoleAssignmentPage.assignLifetimeMemberRole(message, userEmail);
-    } else if (await checkEmailList(userEmail, 'benIsBen')) {
-      RoleAssignmentPage.assignIsBenRole(message, userEmail); 
-    } else if (await checkEmailList(userEmail, 'sarahIsSarah')) {
-      RoleAssignmentPage.assignIsSarahRole(message, userEmail);
-    } else { await
-      message.reply('Sorry, your email address is not on any of the lists.');
+  // Event listener for incoming messages
+  client.on('messageCreate', async (message) => {
+    // Check if the message starts with the command !!verifyEmail
+    if (message.content.startsWith('!!verifyEmail')) {
+      // Extract the user email from the message arguments
+      const args = message.content.split(' ');
+      const userEmail = args[1].toLocaleLowerCase();
+      console.log("User email entered:", userEmail);
+
+      // Check if the user email is on the lifeTimeMemberList and assign the appropriate role
+      if (await checkEmailList(userEmail, 'lifeTimeMemberList')) {
+        RoleAssignmentPage.assignRole(message, userEmail);
+      } else {
+        // If the user email is not on any of the lists, reply with a message
+        message.reply('Sorry, your email address is not on any of the lists.');
+      }
     }
-  }
-})
+  });
 }
+
+// Call the main function to start the bot
 main();
-;
