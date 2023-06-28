@@ -7,9 +7,13 @@ const nodemailer = require('nodemailer');
 const path = require('path');
 const { checkEmailList, RoleAssignmentPage } = require('./helpers.js'); // Import the checkEmailList function from helper.js
 const { loadEmailLists } = require('./emailListLoader.js');
+const { config } = require('dotenv');
 // const emailLists = await loadEmailLists();
+require('dotenv').config()
+console.log(process.env.TOKEN)
+const TOKEN = process.env.BOT_TOKEN;
 
-async function main(){
+async function main(){ 
 // Discord client initialization
 const client = new Client({
   intents: [
@@ -21,7 +25,7 @@ const client = new Client({
 });
 
 // Discord bot login
-client.login('MTA5ODYyNzQ5MTQ3Nzg2NDUzOQ.Gk-L4t.SNXnMdh5F40RNbnb8ImaBKEp7pwwHG55MyGIBg'); //TODO this should be read in as a process.env.TOKEN
+client.login(TOKEN); //TODO this should be read in as a process.env.TOKEN
 
 client.on('ready', (c) => {
   console.log(`✅ Logged in as ${c.user.tag}!`);
