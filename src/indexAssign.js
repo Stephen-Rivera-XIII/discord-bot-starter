@@ -35,10 +35,19 @@ async function main() {
       const userEmail = args[1].toLocaleLowerCase();
       console.log("User email entered:", userEmail);
 
-      // Check if the user email is on the lifeTimeMemberList and assign the appropriate role
-      if (await checkEmailList(userEmail, 'lifeTimeMemberList')) {
-        RoleAssignmentPage.assignRole(message, userEmail);
-      } else {
+      const emailLists = ['Lifetime Member', 'Chivette']; // Array of email lists to check
+
+      let emailFound = false;
+
+      for (const listName of emailLists) {
+        if (await checkEmailList(userEmail, listName)) {
+          await RoleAssignmentPage.assignRole(message, userEmail);
+          emailFound = true;
+          break;
+        }
+      }
+
+      if (!emailFound) {
         // If the user email is not on any of the lists, reply with a message
         message.reply('Sorry, your email address is not on any of the lists.');
       }

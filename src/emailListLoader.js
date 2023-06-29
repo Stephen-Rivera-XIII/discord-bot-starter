@@ -6,13 +6,13 @@ const csv = require('csv-parser'); // Import the csv-parser module for parsing C
 async function loadEmailLists() {
   const emailLists = [
     {
-      name: 'lifeTimeMemberList', // Name of the email list
+      name: 'Lifetime Member', // Name of the email list
       path: 'lifeTimeMemberList.csv', // Path to the CSV file
       role: 'Lifetime Member', // Role associated with this email list
       emails: [], // Array to store the email addresses
     },
     {
-      name: 'chivette', // Name of the email list
+      name: 'Chivette', // Name of the email list
       path: 'chivetteList.csv', // Path to the CSV file
       role: 'Chivette', // Role associated with this email list
       emails: [], // Array to store the email addresses

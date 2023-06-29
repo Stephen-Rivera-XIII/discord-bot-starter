@@ -1,6 +1,5 @@
 const { loadEmailLists } = require('./emailListLoader.js');
 
-// Other helper functions...
 let emailLists;
 
 async function getEmailLists() {
@@ -10,7 +9,6 @@ async function getEmailLists() {
   return emailLists;
 }
 
-// Check if email is in the list
 async function checkEmailList(email, emailListName) {
   const lowercaseEmail = email.trim().toLowerCase();
   const emailLists = await getEmailLists();
@@ -24,44 +22,47 @@ async function checkEmailList(email, emailListName) {
   return false;
 }
 
-// Page object for role assignment functionality
+function getAssignedRolesMessage(namesOfAssignedRoles) {
+  if (namesOfAssignedRoles.length > 0) {
+    const message = `You have been assigned the following roles: ${namesOfAssignedRoles.join(", ")}`;
+    return message;
+  } else {
+    return "No roles have been assigned.";
+  }
+}
+
 const RoleAssignmentPage = {
   assignRole: async function(message, userEmail) {
-    const emailLists = await getEmailLists();
-    let assignedRole = false; // Flag variable to track if a role has been assigned
+    console.log('Assigning role...');
+    let roleNumberOfPasses = 0;
+    let namesOfAssignedRoles = [];
 
-    if (checkEmailList(userEmail, 'Lifetime Member')) {
-      const roleName = 'Lifetime Member';
-      const role = message.guild.roles.cache.find((r) => r.name === roleName);
-      if (!role) {
-        console.error(`Role ${roleName} not found!`);
-        message.reply(`Sorry, the ${roleName} role was not found.`);
-        return;
+    const rolesToCheck = ['Lifetime Member', 'Chivette'];
+
+    for (const roleName of rolesToCheck) {
+      console.log(`Checking role ${roleName}...`);
+      if (await checkEmailList(userEmail, roleName)) {
+        const role = message.guild.roles.cache.find((r) => r.name === roleName);
+        if (!role) {
+          console.error(`Role ${roleName} not found!`);
+          message.reply(`Sorry, the ${roleName} role was not found.`);
+          return;
+        }
+        await message.member.roles.add(role);
+        namesOfAssignedRoles.push(roleName);
+        console.log(`Role ${roleName} assigned.`);
       }
-      // Assign role and set assignedRole flag to true
-      await message.member.roles.add(role);
-      assignedRole = true;
+      roleNumberOfPasses++;
     }
 
-    if (checkEmailList(userEmail, 'Chivette')) {
-      const roleName = 'Chivette';
-      const role = message.guild.roles.cache.find((r) => r.name === roleName);
-      if (!role) {
-        console.error(`Role ${roleName} not found!`);
-        message.reply(`Sorry, the ${roleName} role was not found.`);
-        return;
-      }
-      // Assign role and set assignedRole flag to true
-      await message.member.roles.add(role);
-      assignedRole = true;
-    }
-
-    if (assignedRole) {
-      // If a role has been assigned, reply with the appropriate message
-      message.reply('You have been assigned the Lifetime Member role and the Chivette role!');
+    if (namesOfAssignedRoles.length > 0 && roleNumberOfPasses >= 2) { // Check if all roles have been assigned
+      const replyMessage = getAssignedRolesMessage(namesOfAssignedRoles);
+      console.log('Assigned roles:', namesOfAssignedRoles);
+      message.reply(replyMessage);
+      return true;
     } else {
-      // If no role has been assigned, reply with the default message
-      message.reply('Sorry, your email address is not found on our list.');
+      console.log('No role assigned.');
+      return false;
     }
   },
 };
