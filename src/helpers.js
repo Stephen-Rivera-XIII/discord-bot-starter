@@ -23,13 +23,14 @@ async function checkEmailList(email, emailListName) {
 }
 
 function getAssignedRolesMessage(namesOfAssignedRoles) {
-  if (namesOfAssignedRoles.length > 0) {
+  if (namesOfAssignedRoles && namesOfAssignedRoles.length > 0) {
     const message = `You have been assigned the following roles: ${namesOfAssignedRoles.join(", ")}`;
     return message;
   } else {
-    return "No roles have been assigned.";
+    return "Thanks! Check the Shack to see the roles you have been assigned.";
   }
 }
+
 
 const RoleAssignmentPage = {
   assignRole: async function(message, userEmail) {
@@ -37,8 +38,7 @@ const RoleAssignmentPage = {
     let roleNumberOfPasses = 0;
     let namesOfAssignedRoles = [];
 
-    const rolesToCheck = ['Lifetime Member', 'Chivette'];
-
+    const rolesToCheck = ['Lifetime Member', 'Chivette'];// 
     for (const roleName of rolesToCheck) {
       console.log(`Checking role ${roleName}...`);
       if (await checkEmailList(userEmail, roleName)) {
@@ -55,19 +55,16 @@ const RoleAssignmentPage = {
       roleNumberOfPasses++;
     }
 
-    if (namesOfAssignedRoles.length > 0 && roleNumberOfPasses >= 2) { // Check if all roles have been assigned
-      const replyMessage = getAssignedRolesMessage(namesOfAssignedRoles);
-      console.log('Assigned roles:', namesOfAssignedRoles);
-      message.reply(replyMessage);
-      return true;
-    } else {
-      console.log('No role assigned.');
-      return false;
-    }
+    // Generate the success message with assigned roles
+    const assignedRolesMessage = getAssignedRolesMessage(namesOfAssignedRoles);
+    // Send the success message in the DM
+    console.log(assignedRolesMessage);
+    message.reply(assignedRolesMessage);
   },
 };
 
 module.exports = {
   checkEmailList,
-  RoleAssignmentPage
+  RoleAssignmentPage,
+  getAssignedRolesMessage,
 };

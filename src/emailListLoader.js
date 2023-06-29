@@ -11,6 +11,12 @@ async function loadEmailLists() {
       role: 'Lifetime Member', // Role associated with this email list
       emails: [], // Array to store the email addresses
     },
+    // { hey sarah if you need to change stuff is should look like this
+    //   name: 'Lifetime Member', // Name of the email list
+    //   path: 'lifeTimeMemberList.csv', // Path to the CSV file
+    //   role: 'Lifetime Member', // Role associated with this email list
+    //   emails: [], // Array to store the email addresses
+    // },
     {
       name: 'Chivette', // Name of the email list
       path: 'chivetteList.csv', // Path to the CSV file
