@@ -37,7 +37,19 @@ Additionally, there are two CSV files:
 
 6. Invite the bot to your Discord server and ensure it has the necessary permissions to read messages and assign roles.
 
-7. Users can now use the command `!!verifyEmail <email_address>` to verify their email address and receive the appropriate role.
+7. Users can now use the command `!!verifyEmail` to verify their email address and receive the appropriate role. 
+
+* Entering `!!verifyEmail` triggers the bot to send the submitting user a DM, requesting an email addresss. 
+
+* That email address is then checked against the Lifetime Member and Chivette lists.
+
+* The user is assigned the appropriate roles.
+
+* The user is told by the bot (in the DM) to return to the original channel to see what roles have been assigned.
+
+8. Users can now use the command `!!helpWithVerification` to populate a FAQ and walkthrough DM 
+
+* The response for this behavior has placeholder copy at the moment
 
 ## Dependencies
 

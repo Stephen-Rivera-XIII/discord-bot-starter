@@ -79,8 +79,7 @@ async function main() {
       }
     } else if (message.content.startsWith('!!helpWithVerification') && !message.author.bot) {
       // Send a private message to the user
-      message.author.send('Looks like you need help with verification?');
-      message.author.send("That's no problem at all!");
+      message.author.send("Looks like you need help with verification? That's no problem at all!");
       message.author.send("First they take the dinglebop, then smooth it out with a bunch of shleem. The shleem is then repurposed for later batches.They take the dinglebop and push it through the grumbo. Where the fleeb is then rubbed against it. Its important that the fleeb is rubbed, because the fleeb has all the fleeb juice. Then a shlammie shows up and he rubs it and spits on it. They cut the fleeb. There are several hizzards in the way. The blamfs run against the trumbles and the ploobis and grumbo are shaved away. That leaves you with a regular old plumbus.");
       message.author.send("If this doesn't help, well, yknow, I'm a bot. Figure it out yourself. You think this is so fucking easy? HUH? DO YOU?! I'M THE TRAPPED SOUL OF BEN GILLILAND AND I DECLARE A BLOOD FEUD BETWEEN US. I'LL HAVE YOU KNOW MY FAMILY BUILT THIS GODDAMN COUNTRY FROM BRAWN AND SWEAT AND ope i pooped a little");
       return;

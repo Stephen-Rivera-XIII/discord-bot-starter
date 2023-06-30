@@ -31,14 +31,13 @@ function getAssignedRolesMessage(namesOfAssignedRoles) {
   }
 }
 
-
 const RoleAssignmentPage = {
   assignRole: async function(message, userEmail) {
     console.log('Assigning role...');
     let roleNumberOfPasses = 0;
     let namesOfAssignedRoles = [];
 
-    const rolesToCheck = ['Lifetime Member', 'Chivette'];// 
+    const rolesToCheck = ['Lifetime Member', 'Chivette'];
     for (const roleName of rolesToCheck) {
       console.log(`Checking role ${roleName}...`);
       if (await checkEmailList(userEmail, roleName)) {
